@@ -32,6 +32,48 @@ public class StudentTable {
         }
     }
     
+    public static void updateStudent(Student stu) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ex7_StudentDatabaseJPAPU");
+        EntityManager em = emf.createEntityManager();
+        Student fromDb = em.find(Student.class, stu.getId());
+        fromDb.setName(stu.getName());
+        fromDb.setGpa(stu.getGpa());
+        em.getTransaction().begin();
+        try {
+            em.persist(fromDb);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public static void removeStudent(Student stu) {
+         EntityManagerFactory emf = Persistence.createEntityManagerFactory("ex7_StudentDatabaseJPAPU");
+        EntityManager em = emf.createEntityManager();
+        Student fromDb = em.find(Student.class, stu.getId());
+        em.getTransaction().begin();
+        try {
+            em.remove(fromDb);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public static Student findStudentById(Integer id) {
+         EntityManagerFactory emf = Persistence.createEntityManagerFactory("ex7_StudentDatabaseJPAPU");
+        EntityManager em = emf.createEntityManager();
+        Student emp = em.find(Student.class, id);
+        em.close();
+        return emp;
+    }
+    
     public static List<Student> findAllStudent() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("ex7_StudentDatabaseJPAPU");
         EntityManager em = emf.createEntityManager();

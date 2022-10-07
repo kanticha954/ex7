@@ -5,6 +5,7 @@
  */
 package ex7_studentdatabasejpa;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -20,10 +21,34 @@ public class Ex7_StudentDatabaseJPA {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-       Student stu1 = new Student(1, "John", 12345.0);
-       Student stu2 = new Student(2, "Marry", 45678.0);
+        ///*insert
+       Student stu1 = new Student(1, "John", 4.0);
+       Student stu2 = new Student(2, "Marry", 3.25);
        StudentTable.insertStudent(stu1); 
        StudentTable.insertStudent(stu2);
+        //*/
+        
+        
+       /*Updaate / remove
+        Student stu;
+        stu = StudentTable.findStudentById(1);
+       if (stu != null) {
+           stu.setName("Jack");
+           //StudentTable.removeStudent(stu);
+           StudentTable.updateStudent(stu);
+       }
+       */
+       List<Student> stuList = StudentTable.findAllStudent();
+       printAllStudent(stuList);
+        
+    }
+    
+    public static void printAllStudent(List<Student> StudentList) {
+        for(Student stu : StudentList) {
+           System.out.print(stu.getId() + " ");
+           System.out.print(stu.getName() + " ");
+           System.out.println(stu.getGpa() + " ");
+       }
     }
     
 
